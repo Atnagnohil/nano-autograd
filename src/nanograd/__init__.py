@@ -4,5 +4,6 @@ __version__ = "0.1.0"
 
 from .tensor import Tensor
 from .engine import Value
+from .export_onnx import export_to_onnx
 
-__all__ = ['Tensor', 'Value']
+__all__ = ['Tensor', 'Value', 'export_to_onnx']

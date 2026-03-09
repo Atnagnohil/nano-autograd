@@ -71,3 +71,6 @@ logs/
 
 # 配置文件
 config.yaml
+
+# 权重
+*.onnx

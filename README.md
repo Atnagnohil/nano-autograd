@@ -64,6 +64,7 @@
 **目标**: 完善项目质量
 
 - [ ] 添加详细的 API 文档
+- [ ] 完善支持更多基础算子
 - [ ] 性能分析和优化
 - [ ] 添加更多测试用例
 - [ ] 编写使用教程
@@ -136,6 +137,11 @@ python tests/verify_torch.py
 # 运行测试（开发过程中）
 pytest tests/
 ```
+
+## 参考项目
+https://github.com/srkds/Micrograd-Autograd-Engine-implementation
+https://github.com/tinygrad/tinygrad
+https://github.com/karpathy/micrograd/
 
 ## 开发指南
 

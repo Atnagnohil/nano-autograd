@@ -31,6 +31,7 @@
 **目标**: 构建可组合的神经网络模块
 
 - [ ] `nn/__init__.py` - 模块基类
+- [ ] `nn/module.py` - module基类
 - [ ] `nn/linear.py` - 全连接层
   - 权重初始化（Xavier/He）
   - 前向传播和参数管理
@@ -59,6 +60,7 @@
 - [ ] `examples/compare_pytorch.py` - 与 PyTorch 对比
   - 验证梯度一致性
   - 性能基准测试
+- [ ] `export_to_onnx()` - 导入计算图为onnx
 
 ### 阶段 6: 文档和优化 📚
 **目标**: 完善项目质量
@@ -85,9 +87,10 @@ nano_autograd/
 │       ├── ops.py
 │       │
 │       ├── nn/
-│       │   ├── __init__.py
-│       │   ├── linear.py
-│       │   └── activation.py
+│       │   ├── __init__.py      ← 统一导出
+│       │   ├── module.py        ← Module 基类
+│       │   ├── linear.py        ← Linear
+│       │   └── activation.py    ← ReLU, Sigmoid, Tanh...
 │       │
 │       └── optim/
 │           ├── __init__.py

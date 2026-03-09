@@ -163,6 +163,12 @@ class Tensor:
         """转置（属性）"""
         return self.transpose()
     
+    @staticmethod
+    def stack(tensors, axis=0):
+        """沿着指定轴堆叠多个 Tensor"""
+        from .ops import stack
+        return stack(tensors, axis=axis)
+
     # ==================== 激活函数 ====================
     
     def relu(self):

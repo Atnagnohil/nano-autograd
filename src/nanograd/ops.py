@@ -287,3 +287,68 @@ def tanh(a):
     
     out._backward = _backward
     return out
+
+
+# ==================== 其他张量组合操作 ====================
+
+def stack(tensors, axis=0):
+    """沿着新轴堆叠多个 Tensor, 类似 np.stack
+    
+    Args:
+        tensors: Tensor 的列表或元组
+        axis: 插入新维度的位置（支持负数索引）
+    
+    Returns:
+        堆叠后的新 Tensor
+    """
+    from .tensor import Tensor
+    
+    # 输入检查与转换
+    if not isinstance(tensors, (list, tuple)):
+        raise TypeError("tensors 必须是 list 或 tuple")
+    
+    if len(tensors) == 0:
+        raise ValueError("tensors 列表不能为空")
+    
+    # 全部转为 Tensor，并记录原始 requires_grad 状态
+    ts = [_ensure_tensor(t) for t in tensors]
+    
+    # 检查所有 Tensor 形状一致（np.stack 会强制要求）
+    first_shape = ts[0].shape
+    for t in ts[1:]:
+        if t.shape != first_shape:
+            raise ValueError(f"所有 Tensor 必须有相同形状，得到 {t.shape} != {first_shape}")
+    
+    # 前向计算
+    datas = [t.data for t in ts]
+    out_data = np.stack(datas, axis=axis)
+    
+    # 是否需要梯度（只要有一个需要，就都需要传播）
+    requires_grad = any(t.requires_grad for t in ts)
+    
+    # 创建输出 Tensor
+    out = Tensor(
+        out_data,
+        _children=tuple(ts),
+        _op=f"stack_axis{axis}",
+        requires_grad=requires_grad
+    )
+    
+    def _backward():
+        if not out.requires_grad:
+            return
+        
+        # 把输出梯度沿着 stack 的轴拆分
+        # np.split 会自动处理 axis 的负索引
+        grad_splits = np.split(out.grad, len(ts), axis=axis)
+        
+        for t, grad_part in zip(ts, grad_splits):
+            if t.requires_grad:
+                # grad_part 的形状应该已经和 t.shape 匹配
+                # （因为 split 沿着新轴切分）
+                if t.grad is None:
+                    t.grad = np.zeros_like(t.data)
+                t.grad += grad_part   # 支持梯度累加
+    
+    out._backward = _backward
+    return out

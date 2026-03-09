@@ -40,15 +40,16 @@
   - Softmax（用于分类）
 - [ ] `tests/test_nn.py` - 验证层的前向和反向传播
 
-### 阶段 4: 优化器 🎯
+### 阶段 4: 优化器 ✅
 **目标**: 实现参数更新策略
 
-- [ ] `optim/__init__.py` - 优化器基类
-- [ ] `optim/sgd.py` - 随机梯度下降
+- [x] `optim/__init__.py` - 优化器基类
+- [x] `optim/optimizer.py` - Optimizer基类
+- [x] `optim/sgd.py` - 随机梯度下降
   - 支持学习率
   - 支持动量（可选）
-- [ ] `optim/adam.py` - Adam 优化器（可选）
-- [ ] `tests/test_optim.py` - 验证参数更新
+- [x] `optim/adam.py` - Adam 优化器（带偏差修正）
+- [x] `tests/test_optim.py` - 验证参数更新
 
 ### 阶段 5: 端到端示例 🚀
 **目标**: 训练一个完整的神经网络

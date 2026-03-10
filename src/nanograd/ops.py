@@ -344,8 +344,9 @@ def stack(tensors, axis=0):
         
         for t, grad_part in zip(ts, grad_splits):
             if t.requires_grad:
-                # grad_part 的形状应该已经和 t.shape 匹配
-                # （因为 split 沿着新轴切分）
+                # grad_part 保留了被 split 的维度（大小为 1），需要 squeeze 掉
+                grad_part = np.squeeze(grad_part, axis=axis)
+                
                 if t.grad is None:
                     t.grad = np.zeros_like(t.data)
                 t.grad += grad_part   # 支持梯度累加

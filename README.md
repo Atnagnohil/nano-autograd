@@ -81,8 +81,8 @@ Gradients → Optimizer → Updated Parameters
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone and install
-git clone https://github.com/yourusername/nano_autograd.git
-cd nano_autograd
+git clone https://github.com/Atnagnohil/nano-autograd.git
+cd nano-autograd
 uv sync
 
 # Or use pip
